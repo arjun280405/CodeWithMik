@@ -5,7 +5,7 @@ public:
         int n=nums.size();
         for(int j=1;j<n;j++){
             if(nums[i]!=nums[j]){
-                nums[i+1]=nums[j];
+                nums[i+1]=nums[j];//assigning value
                 i++;
             }
         }
