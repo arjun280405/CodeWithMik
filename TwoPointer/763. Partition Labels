@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> partitionLabels(string s) {
+        // approach 1. find last occurence of ith index
+        //  2. mark it as end index
+        //  3. move pointer j that from i to end there is no invalid
+        //  partition(means one element in one partition only)
+
+        // find last occurence
+        vector<int> mp(26, -1);
+        int n=s.size();
+        vector<int>result;
+        for (int i = 0; i < n; i++) {
+            mp[s[i] - 'a'] = i;
+        }
+        int i = 0;
+        while (i < n) {
+            int end = mp[s[i] - 'a'];
+            int j   = i;
+            while (j < end) {                   // to check for valid partition
+                end = max(mp[s[j] - 'a'], end); // to update the end
+                j++;
+            }
+            result.push_back(j-i+1);
+            i=j+1;
+        }
+        return result;
+    }
+    };
