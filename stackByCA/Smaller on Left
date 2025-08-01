@@ -16,7 +16,7 @@ class Solution {
                 ans[i] = arr[st.top()];
             }
 
-            // Push current index to stack
+            // Push current index to stack for every condition 
             st.push(i);
         }
 
