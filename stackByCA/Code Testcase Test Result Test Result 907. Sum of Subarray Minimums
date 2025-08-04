@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> NSL(vector<int> arr)
+{
+    stack<int> st;
+    int n = arr.size();
+    vector<int> left(n);
+    for (int i = n - 1; i >= 0; i--)
+    {
+        while (!st.empty() && arr[st.top()] > arr[i])
+        {
+            left[st.top()] = i;
+            st.pop();
+        }
+        st.push(i);
+    }
+    // jo bacha hai usme -1 daal do
+    while (!st.empty())
+    {
+        left[st.top()] = -1;
+        st.pop();
+    }
+    return left;
+}
+vector<int> NSR(vector<int> arr)
+{
+    int n = arr.size();
+    vector<int> right(n);
+    stack<int> st;
+    for (int i = 0; i < n; i++)
+    {
+        while (!st.empty() && arr[st.top()] > arr[i])
+        {
+            right[st.top()] = i;
+            st.pop();
+        }
+        st.push(i);
+    }
+    // jo bacha hai usme n daal do
+    while (!st.empty())
+    {
+        right[st.top()] = n;
+        st.pop();
+    }
+    return right;
+}
+int FindSumMin(vector<int> arr)
+{
+    int sum = 0;
+    vector<int> NSL1 = NSL(arr);
+    vector<int> NSR1 = NSR(arr);
+    int n = arr.size();
+    for (int i = 0; i < n; i++)
+    {
+        sum = sum + ((i - NSL1[i]) * (NSR1[i] - i)) * arr[i];
+    }
+    return sum;
+}
+int main()
+{
+    vector<int> arr = {3, 1, 2, 4};
+    cout << FindSumMin(arr);
+}
