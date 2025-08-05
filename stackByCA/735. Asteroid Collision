@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        //Here jo chota hoga magnitude me wo destroy hoga on collisiion 
+        //collision tab hi hoga jab first value positie hogi
+        int n=asteroids.size();
+        vector<int>ans;
+        for(int i=0;i<n;i++)
+        {      //collision condition
+            while(!ans.empty() && ans.back()>0 && asteroids[i]<0){
+                int sum=ans.back()+asteroids[i];
+                if(sum>0)//means stack wala bada hai
+                asteroids[i]=0;
+                else if(sum<0){
+                    //means naya wala no chota hai
+                    ans.pop_back();
+                }
+                else{
+                    //means dono ke magnitude barabar hai
+                    ans.pop_back();
+                    asteroids[i]=0;
+                }
+            }
+            if(asteroids[i]!=0)
+            ans.push_back(asteroids[i]);
+        }
+        return ans;
+    }
+};
