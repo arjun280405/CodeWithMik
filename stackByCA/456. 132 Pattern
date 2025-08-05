@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums) {
+        // Here we check by n-1 to maintain i<j<k and maintain nums[i]<nums[k]<nums[j]
+        int n=nums.size();
+        stack<int>st;
+        int no3=INT_MIN;
+        for(int i=n-1;i>=0;i--)
+        {
+            if(nums[i]<no3)return true; //condition first true nums[i]<nums[k]<nums[j]
+            while(!st.empty()&& st.top()<nums[i]){
+                //matlab larger element mila hai to update karo 
+                no3=st.top(); //second largest
+                st.pop();
+            }
+            st.push(nums[i]);
+        }
+        return false;
+    }
+};
