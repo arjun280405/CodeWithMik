@@ -1,0 +1,29 @@
+int largestRectangleArea(vector<int>& heights) { ///THis is the code of leetcode 84
+        int ans=0;
+        stack<int>st;
+        int n=heights.size();
+        //Here We can find the largest rectangle are by height*(NSR-NSL)
+        //we check for NSR and we automatically find NSL because its already present in st.top()
+        for(int i=0;i<heights.size();i++)
+        {
+            while(!st.empty()&& heights[st.top()]>heights[i]){ //means we get nearest smallestRight
+                int index=st.top();
+                st.pop();
+                if(!st.empty()){ //means NSL bhi hai stack me hai to find ans
+                    ans=max(ans,heights[index]*(i-st.top()-1));//as we know ann=height*NSR-NSL-1
+                }
+                else ans=max(ans,heights[index]*i);
+            }
+            st.push(i);
+        }
+        //Jo bacha hai element
+        while(!st.empty()){
+            int index=st.top();
+            st.pop();
+                if(!st.empty()){
+                    ans=max(ans,heights[index]*(n-st.top()-1));//as we know ann=height*NSR-NSL-1
+                }
+                else ans=max(ans,heights[index]*n);
+        }
+        return ans;
+    }
