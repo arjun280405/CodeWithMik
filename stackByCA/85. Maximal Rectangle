@@ -1,0 +1,52 @@
+class Solution {
+public:
+    // --------------------------------------Approach---------------------------------------------
+    // Same qus like 84 just convert it into heights individual height=sum of
+    // all individual coln
+    int largestRectangleArea(
+        vector<int>& heights) { /// THis is the code of leetcode 84
+        int ans = 0;
+        stack<int> st;
+        int n = heights.size();
+        // iHere We can find the largest rectangle are by heght*(NSR-NSL-1)
+        // we check for NSR and we automatically find NSL because its already present in st.top()
+        for (int i = 0; i < heights.size(); i++) {
+            while (!st.empty() && heights[st.top()] >heights[i]) { // means we get nearest smallestRight
+                int index = st.top();
+                st.pop();
+                if (!st.empty()) { // means NSL bhi hai stack me hai to find ans
+                    ans = max(ans, heights[index] *(i - st.top()-1)); // as we know ann=height*NSR-NSL-1
+                } else
+                    ans = max(ans, heights[index] * i);
+            }
+            st.push(i);
+        }
+        // Jo bacha hai element
+        while (!st.empty()) {
+            int index = st.top();
+            st.pop();
+            if (!st.empty()) {
+                ans = max(ans, heights[index] *(n - st.top()-1)); // as we know height*(NSR-NSL-1)
+            } else
+                ans = max(ans, heights[index] * n);
+        }
+        return ans;
+    }
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int row = matrix.size();
+        int coln = matrix[0].size();
+        vector<int> heights(coln, 0); // for storing heights i.e sum of column
+        int ans = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < coln; j++) {
+                if (matrix[i][j] == '0')
+                    heights[j] =0; // agar mat[i][j]=0 hai to col me 0 add karr do
+                else
+                    heights[j] += 1; // nahi to agar mat me 1 hai to height me
+                                     // +1 add kar do
+            }
+        ans = max(ans, largestRectangleArea(heights));
+        }
+        return ans;
+    }
+};
