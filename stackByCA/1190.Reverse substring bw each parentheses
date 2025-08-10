@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string reverseParentheses(string s) {
+        stack<int>st;// bracket ke liye jab open aaye to kitne ko piche se chodna hai uska length batayega jab close bracket aayega
+        int n=s.size();
+        string ans="";//char store karne ke liye
+        for(int i=0;i<n;i++)
+            {
+                if(s[i]=='(')
+                    st.push(ans.size());
+                else if(s[i]==')')
+                {reverse(ans.begin()+st.top(),ans.end());
+                    st.pop();
+            }
+                else ans.push_back(s[i]);
+                
+            }
+        return ans;
+    }
+};
