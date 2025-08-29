@@ -1,0 +1,46 @@
+-------------------------Approach 1----------------------------------------
+class Solution {
+  public:
+    queue<int> reverseFirstK(queue<int> q, int k) {
+        // code here
+        int n=q.size();
+        if(n<k)return q;
+        vector<int>arr;
+        while(!q.empty()){
+            arr.push_back(q.front());
+            q.pop();
+        }
+        reverse(arr.begin(),arr.begin()+k);
+        for(int i=0;i<arr.size();i++)
+        {
+            q.push(arr[i]);
+        }
+        return q;
+    }
+};
+----------------------------Approach 2------------------------------------------
+class Solution {
+  public:
+    queue<int> reverseFirstK(queue<int>&q, int k) {
+        // code here
+        //to reverse k element we use stack
+        if(k <= 0 || q.empty()||q.size()<k) return q;
+        stack<int>st;
+        for(int i=0;i<k &&!q.empty();i++){
+            st.push(q.front());
+            q.pop();
+        }
+        int n=q.size();
+        while(!st.empty())
+        {
+            q.push(st.top());
+            st.pop();
+        }
+        while(n--)
+        {
+            q.push(q.front());
+            q.pop();
+        }
+        return q;
+    }
+};
