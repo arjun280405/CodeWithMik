@@ -1,0 +1,25 @@
+class Solution {
+public:
+    //By coder Army
+    int minKBitFlips(vector<int>& nums, int k) {
+        int n=nums.size();
+        queue<int>q; //use for
+        int flip=0;
+        for(int i=0;i<n;i++)
+        {
+            //if window size shrink
+            if(!q.empty() && q.front()<i)q.pop();
+            //check no of flip is even so we need to fliip it
+            if(q.size()%2==nums[i]){
+                //check for out of window
+                if(i+k-1>=n){
+                    return -1;
+                }
+                //push kaha tak flip karna hai
+                q.push(i+k-1);
+                flip++;
+            }
+        }
+        return flip;
+    }
+}; 
