@@ -1,0 +1,47 @@
+class Solution {
+  public:
+    string decodedString(string &s) {
+        //first we push the element since s[i]!=']'
+        stack<int>st;
+        int n=s.size();
+        for(int i=0;i<n;i++)
+        {
+            if(s[i]!=']'){
+                st.push(s[i]);
+            }else{
+                //pop the elements till '[' bracket
+                string word;
+                while(!st.empty() && st.top()!='['){
+                    word.push_back(st.top());
+                    st.pop();
+                }//now we get word now check for k
+                reverse(word.begin(),word.end());
+                st.pop();//poping the open bracket from stack
+                //now do pop for k
+                string k;
+                while(!st.empty()&& isdigit(st.top())){
+                    k.push_back(st.top());
+                    st.pop();
+                }
+                reverse(k.begin(),k.end()); //now we get k 
+                //now repeat the word k times
+                string temp;
+                int no=stoi(k);
+                while(no>0){
+                    temp.append(word);
+                    no--;
+                }
+                for(auto ch:temp){
+                    st.push(ch); //after repeatation
+                }
+            }
+        }
+        string ans;
+        while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop();
+        }
+        reverse(begin(ans),end(ans));
+        return ans;
+    }
+};
