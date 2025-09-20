@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    vector<vector<int>> levelOrder(Node *root) {
+        // base Condition
+        //we store here the address of the root and check for its left and right and pop
+        // after the traverse completed
+        queue<Node*>q;
+        vector<vector<int>>ans;
+        q.push(root);//we store node address
+        Node*temp;
+        while(!q.empty()){
+                temp=q.front();
+                q.pop();
+                ans.push_back({temp->data});
+                if(temp->left)q.push(temp->left);//agar left jinda hai 
+                if(temp->right)q.push(temp->right);//agar right jinda hai
+                
+        }
+        return ans;
+    }
+}; 
