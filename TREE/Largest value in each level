@@ -1,0 +1,53 @@
+// User function Template for C++
+//BY DFS
+class Solution {
+  public:
+    void solve(Node* root,int level, vector<int>&ans){
+        if(!root)return ;
+        // if visiting this level first time, push value
+        if(level==ans.size()){
+            ans.push_back(root->data);
+        }
+        else ans[level]=max(ans[level],root->data);
+        solve(root->left,level+1,ans);
+        solve(root->right,level+1,ans);
+    }
+    vector<int> largestValues(Node* root) {
+        // code here
+         vector<int>ans;
+         solve(root,0,ans);
+         return ans;
+    } 
+};
+---------------------------------Approach 2---------------------------------------------------------
+// User function Template for C++
+//BY DFS
+class Solution {
+  public:
+    void solve(Node* root,int level, vector<int>&ans){
+        if(!root)return ;
+        // ...By using bfs
+        queue<Node*>q;
+        q.push(root);
+        Node* temp;
+        while(!q.empty()){
+            int n=q.size();
+            int maxi=INT_MIN;
+            for(int i=0;i<n;i++)
+            {
+                Node*curr=q.front();
+                q.pop();
+                maxi=max(maxi,curr->data);
+                if(curr->left)q.push(curr->left);
+                if(curr->right)q.push(curr->right);
+            }
+            ans.push_back(maxi);
+        }
+    }
+    vector<int> largestValues(Node* root) {
+        // code here
+         vector<int>ans;
+         solve(root,0,ans);
+         return ans;
+    } 
+};
