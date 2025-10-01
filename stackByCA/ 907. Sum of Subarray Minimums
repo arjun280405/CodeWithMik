@@ -1,4 +1,4 @@
-//NSL
+//NSL move
 #include <bits/stdc++.h>
 using namespace std;
 vector<int> NSL(vector<int> arr)
