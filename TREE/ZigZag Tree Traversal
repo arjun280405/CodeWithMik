@@ -1,0 +1,43 @@
+class Solution {
+  public:
+    vector<int> zigZagTraversal(Node* root) {
+        // Take 2 stack 1.LtoR(B stack ) , 2. RtoL(A stack)
+        stack<Node*>st1;
+        stack<Node*>st2;
+        st1.push(root);
+        vector<int>ans;
+        while(!st1.empty() || !st2.empty())
+        {   //first we emty the first array by pushing its child in second element in LTO R manner
+            if(!st1.empty())
+            {
+                Node* temp=st1.top();
+                st1.pop();
+                ans.push_back(temp->data);
+                if(temp->left){
+                    st2.push(temp->left);
+                }
+                if(temp->right)
+                {
+                    st2.push(temp->right);
+                }
+            }
+            else{
+                //st2 ko khali karo by pushing it's child  element in a first in  a RtoL manner
+                while(!st2.empty())
+                {
+                    Node* temp=st2.top();
+                    st2.pop();
+                    ans.push_back(temp->data);
+                    if(temp->right){
+                        st1.push(temp->right);
+                    }
+                    if(temp->left)
+                    {
+                        st1.push(temp->left);
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
