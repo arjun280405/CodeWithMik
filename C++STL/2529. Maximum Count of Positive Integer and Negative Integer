@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maximumCount(vector<int>& nums) {
+        //lets solve by c+++ STL By Count_IF
+        auto lambdaP=[](int a){
+            return a>0;
+        };
+        auto lambdaN=[](int a){
+            return a<0;
+        };
+        int positive=count_if(begin(nums),end(nums),lambdaP);
+        int negative=count_if(begin(nums),end(nums),lambdaN);
+        return max(positive,negative);
+    }
+};
+
+---------------------------Approach --2-------------------------------------
+class Solution {
+public:
+    int maximumCount(vector<int>& nums) {
+        //lets solve by c+++ STL By lower and upper bound
+        int n=nums.size();
+        int firstP=lower_bound(begin(nums),end(nums),1)-begin(nums);
+        int firstN=lower_bound(begin(nums),end(nums),0)-begin(nums);
+        return max(n-firstP,firstN);        
+    }
+};
