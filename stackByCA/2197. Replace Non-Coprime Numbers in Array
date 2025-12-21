@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> replaceNonCoprimes(vector<int>& nums) {
+        vector<int>ans;
+        int n=nums.size();
+        for(int i=0;i<n;i++)
+        {
+            while(!ans.empty()){
+                //find curr and prev for gcd
+                int curr=nums[i];
+                int prev=ans.back();
+                //check for non co-prime if GCD(x, y) > 1 
+                int check=gcd(curr,prev);
+                if(check==1)break;
+                ans.pop_back();
+                int lcm=prev/check*curr;
+                nums[i]=lcm;
+            }
+            ans.push_back(nums[i]);//for all condition
+        }
+        return ans;
+    }
+};
