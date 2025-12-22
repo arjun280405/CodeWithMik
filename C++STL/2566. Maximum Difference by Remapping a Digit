@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int minMaxDifference(int num) {
+        //first we convert no into string to process
+        string str1=to_string(num);
+        string str2=to_string(num);
+        //Lets first make our max no 
+        char ch;
+        int index=str1.find_first_not_of("9");
+        if(index!=string::npos){
+            ch=str1[index];//we change this no with 9 by its all occurence
+            replace(begin(str1),end(str1),ch,'9');
+        }
+        //else we make min no that means change str2[0]=1 that by default so change it by 0 at every place 
+        ch=str2[0];
+        replace(str2.begin(),str2.end(),ch,'0');
+        return stoi(str1)-stoi(str2);
+    }
+};
