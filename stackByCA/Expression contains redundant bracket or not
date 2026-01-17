@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    bool checkRedundancy(string &s) {
+         int n=s.size();
+         stack<char>st;
+         for(int i=0;i<n;i++)
+         {
+            bool hasOperator=false;
+             //when encounter ) so pop till we get (
+             if(s[i]==')')
+             {
+                 //agar pahle ( mil jaye matlab faltu lagaya gya hai
+                while(!st.empty() && st.top()!='('){
+                 int top=st.top();
+                 st.pop();
+                 //agar koi operator mil jaye to no redundant
+                 if(top=='+'||top=='-'||top=='*'||top=='/'){
+                     hasOperator=true;
+                 }
+                }
+                // it must be (
+                if(!st.empty())st.pop();
+                if(!hasOperator)return true;
+            } 
+            //simple push all elements
+            else
+            st.push(s[i]);
+         }
+         return false;
+    }
+};
