@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    string ans;
+    stack<char>undoElement;
+    void append(char x) {
+        ans.push_back(x);
+    }
+
+    void undo() {
+        if(!ans.size()==0){
+            undoElement.push(ans.back());
+            ans.pop_back();
+        }
+    }
+
+    void redo() {
+        ans.push_back(undoElement.top());
+        undoElement.pop();
+    }
+
+    string read() {
+        // read the document
+        return ans;
+    }
+};
