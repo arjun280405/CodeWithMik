@@ -1,0 +1,19 @@
+class Solution {
+  public:
+    vector<int> calculateSpan(vector<int>& arr) {
+        stack<pair<int,int>>st;//pair of{price,span}
+        int n=arr.size();
+        vector<int>ans(n,1);
+        for(int i=0;i<arr.size();i++)
+        {
+            int span=1;
+            while(!st.empty() && st.top().first<=arr[i]){
+                span+=st.top().second;
+                ans[i]+=st.top().second;
+                st.pop();
+            }
+            st.push({arr[i],span});
+        }
+        return ans;
+    }
+};
