@@ -1,0 +1,45 @@
+class Solution {
+  public:
+    //Finding next Greater Left
+    vector<int>getNGL(vector<int>&arr,int n){
+        vector<int>ans(n,-1);
+        stack<int>st;
+        for(int i=0;i<n;i++)
+        {
+            while(!st.empty() && arr[st.top()]<arr[i]){
+                st.pop();
+            }
+            ans[i]=st.empty()?-1:st.top();
+            st.push(i);
+        }
+        return ans;
+    }
+    //Finding next Greater Right
+    vector<int>getNGR(vector<int>&arr,int n){
+        vector<int>ans(n,n);
+        stack<int>st;
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!st.empty() && arr[st.top()]<arr[i]){
+                st.pop();
+            }
+            ans[i]=st.empty()?n:st.top();
+            st.push(i);
+        }
+        return ans;
+    }
+    //Main Function 
+    int maxPeople(vector<int> &arr) {
+        int n=arr.size();
+        int result=INT_MIN;
+        //Lets Find NGL and NGR that is Next Greater Left and Next Greater Right
+        vector<int>NGL=getNGL(arr,n);
+        vector<int>NGR=getNGR(arr,n);
+        for(int i=0;i<n;i++)
+        {
+            int sum=(NGR[i]-NGL[i]-1);
+            result=max(sum,result);
+        }
+        return result;
+    }
+};
