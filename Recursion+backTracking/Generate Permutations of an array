@@ -1,0 +1,60 @@
+------------------------------------------------Approach-1----------------------------------------------------------
+class Solution {
+  public:
+    vector<vector<int>>ans;
+    unordered_set<int>st;
+    int n;
+    void solve(vector<int>&arr,vector<int>&curr){
+        if(curr.size()==n){
+            ans.push_back(curr);
+            return ;
+        }
+        for(int i=0;i<n;i++)
+        {
+            //do
+            if(st.find(arr[i])==st.end())//new element
+            {
+            curr.push_back(arr[i]);
+            st.insert(arr[i]);
+            //explore
+            solve(arr,curr);
+            //undo
+            st.erase(arr[i]);
+            curr.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> permuteDist(vector<int>& arr) { 
+        n=arr.size();
+        vector<int>curr;
+        solve(arr,curr);
+        return ans;
+    }
+  };
+  -----------------------------------------------------------------Approach-2-------------------------------------------------------------
+  class Solution {
+  public:
+    // ----------------------------------------Approach-2 By swapping digit -------------------------
+    vector<vector<int>>ans;
+    int n;
+    void solve(vector<int>&arr,int index){
+        if(index==n){
+            ans.push_back(arr);
+            return ;
+        }
+        for(int i=index;i<n;i++)
+        {
+            //do
+            swap(arr[i],arr[index]);
+            //explore
+            solve(arr,index+1);
+            //undo
+            swap(arr[i],arr[index]);
+        }
+    }
+    vector<vector<int>> permuteDist(vector<int>& arr) { 
+        n=arr.size();
+        solve(arr,0);
+        return ans;
+    }
+};
