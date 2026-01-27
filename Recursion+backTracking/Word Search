@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int m,n;
+    vector<vector<int>>direction={{0,1},{0,-1},{1,0},{-1,0}};
+    bool find(int i,int j,vector<vector<char>>& board, string &word,int index){
+        //Base Case
+        if(index>=word.length())return true;//means sare match ho gye
+        if(i<0 ||j<0 ||i>=n || j>=m ||board[i][j]=='$' ||board[i][j]!=word[index]){
+            return false;
+        }
+        //else we check for all 4 direction
+        char temp=board[i][j];//store for backtrack
+        board[i][j]='$';//mark it as visited
+        //Now we check for all 4 direction {(1,0),(-1,0),(0,1)(-1,0)}
+        for(auto &dir:direction){
+            int new_i=i+dir[0];
+            int new_j=j+dir[1];
+            if(find(new_i,new_j,board,word,index+1))//call for explore all 4 direction
+            {
+                return true;
+            }
+        }
+        board[i][j]=temp;
+        return false;
+    }
+    bool isWordExist(vector<vector<char>>& board, string word) {
+        n=board.size();
+        m=board[0].size();
+        if(m*n<word.length())return false;
+        //Lets check one by one if we found word[0]
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(board[i][j]==word[0]&&find(i,j,board,word,0)){//agar first word mil rha hai to we ecplore for oher by calling find function
+                    return true;//means mil gya 
+                }
+            }
+        }
+        return false;
+    }
+};
