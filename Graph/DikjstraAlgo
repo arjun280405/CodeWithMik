@@ -1,0 +1,42 @@
+class Solution {
+  public:
+    typedef pair<int,int>p;
+    vector<int> dijkstra(int V, vector<vector<int>> &edges, int src) {
+        // Step 1: Build adjacency list
+        unordered_map<int,vector<p>>adj;
+        for(auto edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            int wt=edge[2];
+            adj[u].push_back({v,wt});
+            adj[v].push_back({u,wt});//as graph is undirected
+        }
+        // Step 2: Distance array
+        vector<int>result(V,INT_MAX);
+        result[src]=0;//source to source
+        // Step 3: Min Heap -> {distance, node}
+        priority_queue<p,vector<p>,greater<p>>pq;
+        pq.push({0,src});
+        // Step 4: Dijkstra's Algorithm
+        while(!pq.empty()){
+            int dist=pq.top().first;
+            int node=pq.top().second;
+            pq.pop();
+            // Skip if we already found a better path
+            if(dist > result[node]) continue;
+            //visit neighbours
+            for(auto &nbr:adj[node]){
+                int nextNode=nbr.first;
+                int weight=nbr.second;
+                
+                //Relax step
+                if(result[node]+weight<result[nextNode])//if we get min cost way via adjacent so update it
+                {
+                    result[nextNode]=result[node]+weight;
+                    pq.push({result[nextNode],nextNode});
+                }
+            }
+        }
+        return result;
+    }
+};
