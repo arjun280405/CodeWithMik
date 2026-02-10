@@ -1,0 +1,30 @@
+class Solution {
+  public:
+    int solve(int val,vector<int>&arr){
+        int cost=0;
+        for(int i=0;i<arr.size();i++)
+        {
+            cost+=(arr[i]+val-1)/val;
+        }
+        return cost;
+    }
+    int kokoEat(vector<int>& arr, int k) {
+        int n=arr.size();
+        int ans=INT_MAX;
+        Lets take min pile / hrs is 1 
+        int s=1;
+        //Max is -> max Pile of the arr
+        int e=*max_element(begin(arr),end(arr));
+        while(s<=e){
+            int mid=(s+e)/2;
+            int cost=solve(mid,arr);
+            if(cost<=k){
+                ans=min(ans,mid);
+                e=mid-1;
+            }
+            else
+            s=mid+1;
+        }
+        return ans;
+    }
+};
