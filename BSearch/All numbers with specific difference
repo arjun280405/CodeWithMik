@@ -1,0 +1,27 @@
+class Solution {
+  public:
+    bool checkValid(int n,int d){
+        int sum=0;
+        int no=n;
+        while(n>0){
+            sum+=(n%10);
+            n/=10;
+        }
+        return (no-sum)>=d;
+    }
+    int getCount(int n, int d) {
+        int s=10,e=n;
+        int ans=0;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(checkValid(mid,d)){
+                ans=n-mid+1;
+                e=mid-1;
+            }
+            else {
+                s=mid+1;
+            }
+        }
+        return ans;
+    }
+};
