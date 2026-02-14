@@ -1,0 +1,43 @@
+class Solution {
+  public:
+    ///same problem The Painter's Partition Problem-II
+    bool isValid(int mid,vector<int>&arr,int k){
+        int PersonCount=1;
+        int pages =0;
+        for(int i=0;i<arr.size();i++)
+        {
+            if(arr[i]>mid)return false;//not possible to paint the wall
+            //Now check if painted+arr[i]<mid
+            if((pages+arr[i])<=mid){
+                pages+=arr[i];
+            }
+            else{
+                //we need to assign new painter
+                PersonCount++;
+                pages=arr[i];//assigning new wall
+            }
+        }
+        return PersonCount<=k;
+    }
+    int findPages(vector<int>& arr, int k) {
+        //Here we follow Binary search answer on the range thet is min=max(arr), end=sum(arr)
+        if(arr.size()<k)return -1;
+        int s=*max_element(begin(arr),end(arr));
+        int e=accumulate(begin(arr),end(arr),0);
+        if(k==1)return e;
+        int ans=-1;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            //Lets check our ans is valid
+            if(isValid(mid,arr,k)){
+                ans=mid;
+                e=mid-1;//lets,find min ans
+            }
+            //if ans is invalid
+            else {
+                s=mid+1;
+            }
+        }
+        return ans;
+    }
+};
