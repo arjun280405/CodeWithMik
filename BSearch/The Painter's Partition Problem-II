@@ -1,0 +1,41 @@
+class Solution {
+  public:
+    bool isValid(int mid,vector<int>&arr,int k){
+        int PainterCount=1;
+        int wallPainted =0;
+        for(int i=0;i<arr.size();i++)
+        {
+            if(arr[i]>mid)return false;//not possible to paint the wall
+            //Now check if painted+arr[i]<mid
+            if((wallPainted+arr[i])<=mid){
+                wallPainted+=arr[i];
+            }
+            else{
+                //we need to assign new painter
+                PainterCount++;
+                wallPainted=arr[i];//assigning new wall
+            }
+        }
+        return PainterCount<=k;
+    }
+    int minTime(vector<int>& arr, int k) {
+        //Here we follow Binary search answer on the range thet is min=max(arr), end=sum(arr)
+        int s=*max_element(begin(arr),end(arr));
+        int e=accumulate(begin(arr),end(arr),0);
+        if(k==1)return e;
+        int ans=0;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            //Lets check our ans is valid
+            if(isValid(mid,arr,k)){
+                ans=mid;
+                e=mid-1;//lets,find min ans
+            }
+            //if ans is invalid
+            else {
+                s=mid+1;
+            }
+        }
+        return ans;
+    }
+};
