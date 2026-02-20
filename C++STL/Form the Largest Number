@@ -1,0 +1,22 @@
+class Solution {
+  public:
+    string findLargest(vector<int> &arr) {
+        //Here we need to sort in a specific manner that means we need to write our sorting algo i.e comparator
+        int n=arr.size();
+        auto Comp=[](string &s1,string &s2){
+        return (s1+s2)>(s2+s1);
+    };
+        vector<string>inputArr;
+        for(auto &val:arr){
+            inputArr.push_back(to_string(val));
+        }
+        sort(begin(inputArr),end(inputArr),Comp);
+        string result="";
+        //edge case 
+        if(inputArr[0]=="0")return "0";
+        for(auto &val:inputArr){
+            result+=val;
+        }
+        return result;
+    }
+};
