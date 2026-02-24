@@ -1,0 +1,25 @@
+Longest Span in two Binary Arraysclass Solution {
+  public:
+    int equalSumSpan(vector<int> &a1, vector<int> &a2) {
+        int n=a1.size();
+        unordered_map<int,int>mp;
+        int ans=0;
+        int prefixSum=0;
+        for(int i=0;i<n;i++)
+        {
+            prefixSum+=a1[i]-a2[i];
+            //case-1
+            if(prefixSum==0)
+            ans=max(ans,i+1);
+            ///case-2 agar prefix samne pahle dekh chuke hai to wha par sum 9 hoga 
+            else if(mp.find(prefixSum)!=mp.end()){
+                ans=max(ans,i-mp[prefixSum]);
+            }
+            else {
+                //store index of prefix sum in map
+                mp[prefixSum]=i;
+            }
+        }
+        return ans;
+    }
+};
