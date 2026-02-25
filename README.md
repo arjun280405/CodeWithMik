@@ -47,7 +47,7 @@ In a world where code is power, DSA is the sword. I created this series not just
 ## 🏁 Progress Tracker
 
 📅 Started: `June 2025`
-🧩 Problems Solved: `XX+`
+🧩 Problems Solved: `500+`
 📘 Status: `Actively Updating`
 
 ---
