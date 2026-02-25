@@ -1,0 +1,27 @@
+class Solution {
+  public:
+    int longestSubarray(vector<int> &arr, int k) {
+        int sum=0,ans=0;
+        unordered_map<int,int>mp;
+        for(int i=0;i<arr.size();i++)
+        {
+            //step 1 convert in +-1
+            if(arr[i]>k)sum+=1;
+            else sum-=1;
+            
+            //step-2 now check ans >0
+            if(sum>0){
+                ans=i+1;
+            }
+            //agar sum ko pehle dekha hai so ans me add dist(i-mp[sum-1]) 
+            if(mp.find(sum-1)!=mp.end())
+            {
+                ans=max(ans,i-mp[sum-1]);
+            }
+            if(mp.find(sum)==mp.end()){
+                mp[sum]=i;
+            }
+        }
+        return ans;
+    }
+};
