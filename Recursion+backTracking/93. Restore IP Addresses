@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int n;
+    vector<string>result;
+    bool isValid(string str){
+        //checking for leading zeroes
+        if(str[0]=='0')return false;
+        //checking value should lie between 0-255
+        int val=stoi(str);
+        return val<=255;
+    }
+    void solve(string &s,int index,int part,string curr){
+        //Base Case
+        if(index==n && part==4){
+            //first we remove last wala '.'
+            curr.pop_back();
+            result.push_back(curr);
+            return;
+        }
+        //else we call our 3 possible condition i.e include i+1, i+2 and i+3
+        if(index+1<=n)
+        solve(s,index+1,part+1,curr+s.substr(index,1)+".");
+        if(index+2<=n && isValid(s.substr(index,2)))
+        solve(s,index+2,part+1,curr+s.substr(index,2)+".");
+        if(index+3<=n && isValid(s.substr(index,3)))
+        solve(s,index+3,part+1,curr+s.substr(index,3)+".");
+    }
+    vector<string> restoreIpAddresses(string s) {
+        result.clear();
+        n=s.length();
+        if(n>12){//because possible no is 3 digit of 4 size
+            return {};
+        }
+        int part=0;
+        string curr="";//to store no's to check valid
+        solve(s,0,part,curr);//solve(input,index,part,curr)
+        return result;
+    }
+};
