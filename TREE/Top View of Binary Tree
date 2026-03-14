@@ -1,0 +1,49 @@
+/*
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+*/
+
+class Solution {
+  public:
+    vector<int> topView(Node *root) {
+        //Here we need one queue to traverse BFS order we store it as {Node, Hd}Hd:means Horiz dist
+        map<int,int>mp;
+        queue<pair<Node*,int>>q;
+        //first we put root at hd=0
+        q.push({root,0});
+        while(!q.empty()){
+            auto val=q.front();
+            q.pop();
+            Node* node=val.first;//q ke inside wala node 
+            int Hd=val.second;
+            //check in map pahle is node ko dekha hai kya?
+            if(mp.find(Hd)==mp.end()){
+                mp[Hd]=node->data;
+            }
+            //call for left part by doing hd-1
+            if(node->left){
+                q.push({node->left,Hd-1});
+            }
+            //call for left part by doing hd+1
+            if(node->right){
+                q.push({node->right,Hd+1});
+            }
+        }
+        //Now we convert our ans from map
+        vector<int>ans;
+        for(auto &it:mp){
+            ans.push_back(it.second);
+        }
+        return ans;
+    }
+};
