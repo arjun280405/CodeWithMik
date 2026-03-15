@@ -1,0 +1,27 @@
+class Solution {
+  public:
+    vector<vector<int>> verticalOrder(Node *root) {
+        queue<pair<int,Node*>>q;
+        map<int,vector<int>>mp;
+        q.push({0,root});
+        while(!q.empty()){
+            auto value=q.front();
+            q.pop();
+            Node* node=value.second;
+            int Hd=value.first;
+            mp[Hd].push_back(node->data);
+            
+            //call for left part and Hd-1
+            if(node->left)
+            q.push({Hd-1,node->left});
+            //call for right part and Hd+1
+            if(node->right)
+            q.push({Hd+1,node->right});
+        }
+        vector<vector<int>>ans;
+        for(auto &val:mp){
+            ans.push_back(val.second);
+        }
+        return ans;
+    }
+};
