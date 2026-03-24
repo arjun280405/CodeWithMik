@@ -1,0 +1,38 @@
+class Solution {
+  public:
+    bool dfs(int node,vector<vector<int>>&adj,vector<int>&vis,vector<int>&inRec){
+        //mark ith node as visited
+        vis[node]=1;
+        inRec[node]=1;
+        //check for each connected to its node
+        for(auto it:adj[node]){
+            if(!vis[it]){
+                if(dfs(it,adj,vis,inRec))
+                    return true;//means cycle mil gya
+            }
+            else if(inRec[it]){
+                return true;//means cycle detected 
+            }
+        }
+        inRec[node]=0;
+        return false;
+    }
+    bool canFinish(int n, vector<vector<int>>& prerequisites) { 
+        //Step 1 make adjacency list for graph
+        vector<vector<int>>adj(n);
+        for(auto it:prerequisites){
+            adj[it[1]].push_back(it[0]);///Like (x,y) so y->x
+        }
+        //check for cycle for each node so visit each node by dfs
+        vector<int>vis(n,0);
+        vector<int>inRecursion(n,0);
+        for(int i=0;i<n;i++)
+        {
+            if(!vis[i]){
+                if(dfs(i,adj,vis,inRecursion))
+                    return false;//means cycle mil gya
+            }
+        }
+        return true;
+    }
+};
