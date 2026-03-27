@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int n,m;
+    int dp[71][71][71];
+    int solve(int row,int c1,int c2,vector<vector<int>>& grid)
+    {
+        if(row>=n)return 0;//when reach at bottom row
+        if(dp[row][c1][c2]!=-1)return dp[row][c1][c2];//memoizing the existing state
+        int count=grid[row][c1];//adding to first Robo
+        //check for if not same block 
+        if(c1!=c2){
+            count+=grid[row][c2];
+        }
+        //check and find max By moving in all three direction i.e col ->{-1,0,1}
+        int ans=0;
+        for(int i=-1;i<=1;i++)
+        {
+            for(int j=-1;j<=1;j++)
+            {
+                int c1_=c1+i;
+                int c2_=c2+j;
+                //checking for out of bound if not so chek all 3 direction and add max quantity
+                if(c1_>=0 && c1_<m && c2_>=0 && c2_<m){
+                    ans=max(ans,solve(row+1,c1_,c2_,grid));
+                }
+            }
+        }
+        return dp[row][c1][c2]=count+ans;//both quantiy by robo1 and robo2
+    }
+    int cherryPickup(vector<vector<int>>& grid) {
+        n=grid.size();//row size
+        m=grid[0].size();//col size
+        memset(dp,-1,sizeof(dp));
+        return solve(0,0,m-1,grid);//(row,col1,col2,grid) row is same  for both Robo and c1->Robo1 c2->Robo2
+    }
+};
